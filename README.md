@@ -1,6 +1,6 @@
 [![Actions Status](https://github.com/NikoKrauche/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/NikoKrauche/frontend-project-12/actions)
 
-# Simle Chat
+# Simple Chat
 An analogue of Slack chat (a very simplified version)
 real-time React/Redux application using AJAX, REST, websockets, React (with hooks) + Redux (@reduxjs/toolkit) + Formik
 
