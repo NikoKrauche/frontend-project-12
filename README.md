@@ -6,7 +6,7 @@ real-time React/Redux application using AJAX, REST, websockets, React (with hook
 
 ## Link to app
 
-[![Web App]()](https://frontend-project-11-pied-iota.vercel.app/)
+[![Web App](https://go-chat-90zg.onrender.com/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg)](https://go-chat-90zg.onrender.com/)
 
 ***
  [![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/assets/master/images/hexlet_logo128.png)](https://ru.hexlet.io/u/nikokrauch)
