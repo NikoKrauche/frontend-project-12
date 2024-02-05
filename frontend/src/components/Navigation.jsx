@@ -1,13 +1,12 @@
+import { Container, Navbar } from 'react-bootstrap';
 import routes from '../routes.js';
 
-const Navigation = () => (
-  <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-    <div className="container">
-      <a className="navbar-brand" href={routes.mainPath()}>
-        Hexlet Chat
-      </a>
-    </div>
-  </nav>
+const NavigationBar = () => (
+  <Navbar expand="lg" className="bg-body-tertiary">
+    <Container>
+      <Navbar.Brand href={routes.mainPath()}>Hexlet Chat</Navbar.Brand>
+    </Container>
+  </Navbar>
 );
 
-export default Navigation;
+export default NavigationBar;

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import NavigationBar from './Navigation.jsx';
 
 const MainPage = () => (
   <>
+    <NavigationBar />
     <nav>
       <ul>
         <li>
