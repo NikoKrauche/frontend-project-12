@@ -1,22 +1,31 @@
+import React from 'react';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
-import routes from '../routes.js';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { loginSuccess } from '../slices/authorizationSlice.js';
+import routes from '../utilities/routes.js';
 import MainPage from './MainPage.jsx';
 import LoginPage from './LoginPage.jsx';
 import Page404 from './Page404.jsx';
 
 const App = () => {
-  const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+  const dispatch = useDispatch();
+  const token = JSON.parse(localStorage.getItem('token'));
+  if (token) dispatch(loginSuccess(token));
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={routes.mainPath()}
           element={
-          isLoggedIn
-            ? <MainPage />
-            : <Navigate to={routes.loginPath()} />
+            isAuthenticated
+              ? <MainPage />
+              : <Navigate to={routes.loginPath()} />
 }
         />
         <Route path={routes.loginPath()} element={<LoginPage />} />
