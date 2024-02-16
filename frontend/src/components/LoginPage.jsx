@@ -17,7 +17,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const error = useSelector((state) => state.authReducer?.error);
+  const error = useSelector((state) => state.auth.error);
 
   const formik = useFormik({
     initialValues: {

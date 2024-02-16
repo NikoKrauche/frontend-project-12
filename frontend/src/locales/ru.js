@@ -24,6 +24,9 @@ export default {
       placeholder: 'Введите сообщение...',
       inputLabel: 'Новое сообщение',
       buttonSubmit: 'Отправить',
+      error: {
+        errorMessage: 'Ошибка сети',
+      },
     },
   },
 };

@@ -8,9 +8,9 @@ import { fetchChannels, setChannel, selectors } from '../../slices/channelsSlice
 
 const Channels = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth.user);
+  const userData = useSelector((state) => state.auth.user);
 
-  useEffect(() => { dispatch(fetchChannels(token)); });
+  useEffect(() => { dispatch(fetchChannels(userData.token)); });
   const currentChannel = useSelector((state) => state.channels.currentChannel);
   const channels = useSelector(selectors.selectAll);
 
@@ -39,7 +39,7 @@ const Channels = () => {
         </ul>
         )}
       </Col>
-      <Messages currentChannel={currentChannel} token={token} />
+      <Messages currentChannel={currentChannel} userData={userData} />
     </Row>
   );
 };
