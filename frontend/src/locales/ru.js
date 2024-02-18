@@ -28,5 +28,27 @@ export default {
         errorMessage: 'Ошибка сети',
       },
     },
+    Channels: {
+      channelManagement: 'Управление каналом',
+      delete: 'Удалить',
+      rename: 'Переименовать',
+    },
+    Modal: {
+      name: 'Имя канала',
+      add: 'Добавить канал',
+      edit: 'Переименовать канал',
+      remove: 'Удалить канал',
+      sure: 'Уверены?',
+      cancel: 'Отменить',
+      delete: 'Удалить',
+      deleting: 'Удаление',
+      submit: 'Отправить',
+      error: {
+        nameRequired: 'Обязательное поле',
+        nameLength: 'От 3 до 20 символов',
+        nameDuplicate: 'Должно быть уникальным',
+        network: 'Ошибка сети',
+      },
+    },
   },
 };

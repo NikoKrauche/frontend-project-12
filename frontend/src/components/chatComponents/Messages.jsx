@@ -76,6 +76,7 @@ const Messages = ({ currentChannel, userData }) => {
                 aria-label={t('Chat.inputLabel')}
                 placeholder={t('Chat.placeholder')}
                 className="border-0 p-0 ps-2 form-control"
+                autoFocus
                 value={formik.values.body}
                 onChange={formik.handleChange}
               />
