@@ -3,11 +3,11 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import NavigationBar from './Navigation.jsx';
 import routes from '../utilities/routes.js';
-
 import {
   loginSuccess, loginFailure,
 } from '../slices/authorizationSlice.js';
@@ -19,26 +19,24 @@ const LoginPage = () => {
 
   const error = useSelector((state) => state.auth.error);
 
+  const handleSubmit = async (values) => {
+    try {
+      const { data } = await axios.post(routes.authorization(), values);
+
+      dispatch(loginSuccess(data));
+      localStorage.setItem('token', JSON.stringify(data));
+      navigate(routes.mainPath());
+    } catch (e) {
+      dispatch(loginFailure(e));
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       username: null,
       password: null,
     },
-
-    onSubmit: async (values, { setSubmitting }) => {
-      try {
-        setSubmitting(true);
-
-        const { data } = await axios.post(routes.authorization(), values);
-
-        dispatch(loginSuccess(data));
-        localStorage.setItem('token', JSON.stringify(data));
-        navigate(routes.mainPath());
-      } catch (e) {
-        setSubmitting(false);
-        dispatch(loginFailure(e));
-      }
-    },
+    onSubmit: handleSubmit,
   });
 
   return (
@@ -50,10 +48,10 @@ const LoginPage = () => {
             <div className="card shadow-sm">
               <div className="card-body row p-5">
                 <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                  <img src="./images/login.png" className="rounded-circle" alt={t('LoginPage.logIn')} />
+                  <img src="./images/logo.png" className="rounded-circle" alt={t('LoginPage.login')} />
                 </div>
                 <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={formik.handleSubmit}>
-                  <h1 className="text-center mb-4">{t('LoginPage.logIn')}</h1>
+                  <h1 className="text-center mb-4">{t('LoginPage.login')}</h1>
                   <Form.Group className="form-floating mb-3">
                     <Form.Control
                       id="username"
@@ -92,13 +90,16 @@ const LoginPage = () => {
                     type="submit"
                     disabled={formik.isSubmitting}
                   >
-                    {t('LoginPage.logIn')}
+                    {t('LoginPage.login')}
                   </Button>
                 </Form>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div className="fixed-top" style={{ marginTop: '70px', marginRight: '15px', textAlign: 'right' }}>
+        <Link to="/signup">{t('LoginPage.register')}</Link>
       </div>
     </>
   );

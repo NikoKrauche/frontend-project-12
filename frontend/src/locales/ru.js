@@ -6,11 +6,26 @@ export default {
       buttonLogIn: 'Войти',
     },
     LoginPage: {
-      logIn: 'Войти',
+      login: 'Войти',
       username: 'Ваш ник',
       password: 'Пароль',
+      register: 'Регистрация',
       error: {
         valid: 'Неверные имя пользователя или пароль',
+      },
+    },
+    SignupPage: {
+      registration: 'Регистрация',
+      username: 'Ваш ник',
+      password: 'Пароль',
+      passwordConfirmation: 'Подтвердите пароль',
+      error: {
+        required: 'Обязательное поле',
+        nameLength: 'От 3 до 20 символов',
+        passwordLength: 'Не менее 6 символов',
+        passwordMatch: 'Пароль и его подтверждение должны совпадать',
+        usernameExists: 'Имя пользователя уже существует',
+        network: 'Ошибка сети',
       },
     },
     Page404: {

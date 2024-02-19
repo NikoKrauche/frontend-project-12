@@ -34,14 +34,14 @@ const AddChannel = () => {
     onSubmit: handleSubmit,
   });
 
-  async function handleSubmit(values) {
+  const handleSubmit = async (values) => {
     try {
       await dispatch(addChannelThunk({ token, name: values.name }));
       dispatch(modalClose());
     } catch (error) {
       formik.setStatus({ error: true });
     }
-  }
+  };
 
   return (
     <Modal
