@@ -30,6 +30,15 @@ const EditChannel = ({ id }) => {
       .notOneOf(channelNames, t('Modal.error.nameDuplicate')),
   });
 
+  const handleSubmit = async (values) => {
+    try {
+      await dispatch(renameChannelThunk({ token, name: values.name, id }));
+      dispatch(modalClose());
+    } catch (error) {
+      formik.setStatus({ error: true });
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: currentChannel.name,
@@ -42,15 +51,6 @@ const EditChannel = ({ id }) => {
     input.current.focus();
     input.current.setSelectionRange(0, formik.values.name.length);
   });
-
-  async function handleSubmit(values) {
-    try {
-      await dispatch(renameChannelThunk({ token, name: values.name, id }));
-      dispatch(modalClose());
-    } catch (error) {
-      formik.setStatus({ error: true });
-    }
-  }
 
   return (
     <Modal

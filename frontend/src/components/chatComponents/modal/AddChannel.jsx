@@ -26,14 +26,6 @@ const AddChannel = () => {
       .notOneOf(channelNames, t('Modal.error.nameDuplicate')),
   });
 
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-    },
-    validationSchema,
-    onSubmit: handleSubmit,
-  });
-
   const handleSubmit = async (values) => {
     try {
       await dispatch(addChannelThunk({ token, name: values.name }));
@@ -42,6 +34,14 @@ const AddChannel = () => {
       formik.setStatus({ error: true });
     }
   };
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+    },
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
 
   return (
     <Modal

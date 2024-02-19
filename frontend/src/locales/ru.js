@@ -35,7 +35,10 @@ export default {
     },
     Chat: {
       channel: 'Каналы',
-      messageCounter: 'сообщений',
+      messageCounter_one: '{{count}} сообщение',
+      messageCounter_few: '{{count}} сообщения',
+      messageCounter_plural: '{{count}} сообщения',
+      messageCounter_many: '{{count}} сообщений',
       placeholder: 'Введите сообщение...',
       inputLabel: 'Новое сообщение',
       buttonSubmit: 'Отправить',

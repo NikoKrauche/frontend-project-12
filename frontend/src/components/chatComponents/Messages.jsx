@@ -47,9 +47,7 @@ const Messages = ({ currentChannel, userData }) => {
             </b>
           </p>
           <span className="text-muted">
-            {messages.length}
-            {' '}
-            {t('Chat.messageCounter')}
+            {t('Chat.messageCounter', { count: messages.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
