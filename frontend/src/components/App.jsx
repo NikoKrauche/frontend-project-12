@@ -17,7 +17,7 @@ const App = () => {
 
   useEffect(() => sockets(dispatch));
 
-  const token = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('userData'));
   if (token) dispatch(loginSuccess(token));
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);

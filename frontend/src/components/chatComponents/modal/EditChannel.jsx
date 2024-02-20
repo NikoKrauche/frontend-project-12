@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { Modal, Form, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { renameChannelThunk, selectors } from '../../../slices/channelsSlice.js';
 import { modalClose } from '../../../slices/modalSlice.js';
@@ -34,6 +35,7 @@ const EditChannel = ({ id }) => {
     try {
       await dispatch(renameChannelThunk({ token, name: values.name, id }));
       dispatch(modalClose());
+      toast.success(t('Modal.toastEdit'));
     } catch (error) {
       formik.setStatus({ error: true });
     }

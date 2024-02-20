@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import NavigationBar from './Navigation.jsx';
 import routes from '../utilities/routes.js';
@@ -34,9 +35,12 @@ const SignupPage = () => {
       const { data } = await axios.post(routes.createNewUser(), { username, password });
 
       dispatch(loginSuccess(data));
-      localStorage.setItem('token', JSON.stringify(data));
+      localStorage.setItem('userData', JSON.stringify(data));
       navigate(routes.mainPath());
     } catch (e) {
+      if (e.message === 'Network Error') {
+        toast.error(t('Chat.error.network'));
+      }
       if (e.response && e.response.status === 409) {
         formik.setStatus({ serverError: true });
       } else {
@@ -133,7 +137,7 @@ const SignupPage = () => {
                     type="submit"
                     disabled={formik.isSubmitting}
                   >
-                    {t('SignupPage.registration')}
+                    {t('SignupPage.registrationBtn')}
                   </Button>
                 </Form>
               </div>

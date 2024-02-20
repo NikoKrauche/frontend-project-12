@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
-import { Col, Button, Form } from 'react-bootstrap';
+import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { Col, Button, Form } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { fetchMessages, sendMessage, selectors } from '../../slices/messagesSlice';
 
 const Messages = ({ currentChannel, userData }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  useEffect(() => { dispatch(fetchMessages(userData.token)); });
+
   const activeChannel = useSelector((state) => state.channels.entities[currentChannel]) || { name: 'general' };
+
   const messages = useSelector(selectors.selectAll)
     .filter((message) => message.channelId === currentChannel);
 
-  const formik = useFormik({
-    initialValues: {
-      body: '',
-    },
-    onSubmit: handleSubmit,
+  const validationSchema = yup.object().shape({
+    body: yup
+      .string()
+      .required('Required'),
   });
 
-  useEffect(() => { dispatch(fetchMessages(userData.token)); });
-
-  async function handleSubmit(values, { resetForm }) {
+  const handleSubmit = async (values, { resetForm }) => {
     try {
       const newMessage = {
         body: values.body,
@@ -32,10 +35,22 @@ const Messages = ({ currentChannel, userData }) => {
 
       await dispatch(sendMessage({ token: userData.token, newMessage }));
       resetForm();
-    } catch (error) {
+    } catch (e) {
+      if (e.message === 'Network Error') {
+        toast.error(t('Chat.error.network'));
+      }
       formik.setStatus({ error: true });
     }
-  }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      body: '',
+    },
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+
   return (
     <Col className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -92,7 +107,7 @@ const Messages = ({ currentChannel, userData }) => {
             </Form.Group>
           </Form>
           {formik.status && formik.status.error && (
-            <div className="text-danger small">{t('Chat.error.errorMessage')}</div>
+            <div className="text-danger small">{t('Chat.error.network')}</div>
           )}
         </div>
       </div>

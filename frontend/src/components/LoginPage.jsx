@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import NavigationBar from './Navigation.jsx';
 import routes from '../utilities/routes.js';
@@ -22,12 +23,15 @@ const LoginPage = () => {
   const handleSubmit = async (values) => {
     try {
       const { data } = await axios.post(routes.authorization(), values);
-
       dispatch(loginSuccess(data));
-      localStorage.setItem('token', JSON.stringify(data));
+      localStorage.setItem('userData', JSON.stringify(data));
       navigate(routes.mainPath());
     } catch (e) {
-      dispatch(loginFailure(e));
+      if (e.message === 'Network Error') {
+        toast.error(t('Chat.error.network'));
+      } else {
+        dispatch(loginFailure(e));
+      }
     }
   };
 
@@ -94,12 +98,15 @@ const LoginPage = () => {
                   </Button>
                 </Form>
               </div>
+              <div className="card-footer p-4">
+                <div className="text-center">
+                  <span>{t('LoginPage.cardFooter')}</span>
+                  <Link to="/signup">{t('LoginPage.register')}</Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="fixed-top" style={{ marginTop: '70px', marginRight: '15px', textAlign: 'right' }}>
-        <Link to="/signup">{t('LoginPage.register')}</Link>
       </div>
     </>
   );

@@ -10,12 +10,14 @@ export default {
       username: 'Ваш ник',
       password: 'Пароль',
       register: 'Регистрация',
+      cardFooter: 'Нет аккаунта? ',
       error: {
         valid: 'Неверные имя пользователя или пароль',
       },
     },
     SignupPage: {
       registration: 'Регистрация',
+      registrationBtn: 'Зарегистрироваться',
       username: 'Ваш ник',
       password: 'Пароль',
       passwordConfirmation: 'Подтвердите пароль',
@@ -23,9 +25,8 @@ export default {
         required: 'Обязательное поле',
         nameLength: 'От 3 до 20 символов',
         passwordLength: 'Не менее 6 символов',
-        passwordMatch: 'Пароль и его подтверждение должны совпадать',
+        passwordMatch: 'Пароли должны совпадать',
         usernameExists: 'Имя пользователя уже существует',
-        network: 'Ошибка сети',
       },
     },
     Page404: {
@@ -43,7 +44,7 @@ export default {
       inputLabel: 'Новое сообщение',
       buttonSubmit: 'Отправить',
       error: {
-        errorMessage: 'Ошибка сети',
+        network: 'Ошибка сети',
       },
     },
     Channels: {
@@ -61,11 +62,13 @@ export default {
       delete: 'Удалить',
       deleting: 'Удаление',
       submit: 'Отправить',
+      toastAdd: 'Канал создан',
+      toastEdit: 'Канал переименован',
+      toastDelete: 'Канал удалён',
       error: {
         nameRequired: 'Обязательное поле',
         nameLength: 'От 3 до 20 символов',
         nameDuplicate: 'Должно быть уникальным',
-        network: 'Ошибка сети',
       },
     },
   },
