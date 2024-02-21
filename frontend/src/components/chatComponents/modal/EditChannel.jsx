@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +14,8 @@ const EditChannel = ({ id }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const input = useRef(null);
+
+  leoProfanity.loadDictionary('ru');
 
   const { isShow } = useSelector((state) => state.modal);
   const { token } = useSelector((state) => state.auth.user);
@@ -31,9 +34,10 @@ const EditChannel = ({ id }) => {
       .notOneOf(channelNames, t('Modal.error.nameDuplicate')),
   });
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async ({ name }) => {
+    const filteredName = leoProfanity.clean(name);
     try {
-      await dispatch(renameChannelThunk({ token, name: values.name, id }));
+      await dispatch(renameChannelThunk({ token, name: filteredName, id }));
       dispatch(modalClose());
       toast.success(t('Modal.toastEdit'));
     } catch (error) {

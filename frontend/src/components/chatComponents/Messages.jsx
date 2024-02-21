@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { Col, Button, Form } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +12,7 @@ import { fetchMessages, sendMessage, selectors } from '../../slices/messagesSlic
 const Messages = ({ currentChannel, userData }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  leoProfanity.loadDictionary('ru');
 
   useEffect(() => { dispatch(fetchMessages(userData.token)); });
 
@@ -22,13 +24,14 @@ const Messages = ({ currentChannel, userData }) => {
   const validationSchema = yup.object().shape({
     body: yup
       .string()
-      .required('Required'),
+      .required(),
   });
 
   const handleSubmit = async (values, { resetForm }) => {
+    const filteredMessage = leoProfanity.clean(values.body);
     try {
       const newMessage = {
-        body: values.body,
+        body: filteredMessage,
         channelId: currentChannel,
         username: userData.username,
       };
