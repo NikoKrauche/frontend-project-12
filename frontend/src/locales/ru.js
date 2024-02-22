@@ -18,7 +18,7 @@ export default {
     SignupPage: {
       registration: 'Регистрация',
       registrationBtn: 'Зарегистрироваться',
-      username: 'Ваш ник',
+      username: 'Имя пользователя',
       password: 'Пароль',
       passwordConfirmation: 'Подтвердите пароль',
       error: {
@@ -44,7 +44,7 @@ export default {
       inputLabel: 'Новое сообщение',
       buttonSubmit: 'Отправить',
       error: {
-        network: 'Ошибка сети',
+        network: 'Ошибка соединения',
       },
     },
     Channels: {
