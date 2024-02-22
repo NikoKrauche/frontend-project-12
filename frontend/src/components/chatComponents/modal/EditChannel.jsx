@@ -15,8 +15,6 @@ const EditChannel = ({ id }) => {
   const dispatch = useDispatch();
   const input = useRef(null);
 
-  leoProfanity.loadDictionary('ru');
-
   const { isShow } = useSelector((state) => state.modal);
   const { token } = useSelector((state) => state.auth.user);
 

@@ -1,8 +1,11 @@
 import i18next from 'i18next';
 import { Provider } from 'react-redux';
+import leoProfanity from 'leo-profanity';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import rollbarConfig from './utilities/rollbarConfig.js';
 
 import App from './components/App.jsx';
 import store from './slices/index.js';
@@ -21,13 +24,19 @@ const init = async () => {
       },
     });
 
+  leoProfanity.loadDictionary('ru');
+
   return (
-    <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <App />
-        <ToastContainer />
-      </Provider>
-    </I18nextProvider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <Provider store={store}>
+            <App />
+            <ToastContainer />
+          </Provider>
+        </I18nextProvider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 

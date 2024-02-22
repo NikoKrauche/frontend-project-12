@@ -12,7 +12,6 @@ import { fetchMessages, sendMessage, selectors } from '../../slices/messagesSlic
 const Messages = ({ currentChannel, userData }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  leoProfanity.loadDictionary('ru');
 
   useEffect(() => { dispatch(fetchMessages(userData.token)); });
 

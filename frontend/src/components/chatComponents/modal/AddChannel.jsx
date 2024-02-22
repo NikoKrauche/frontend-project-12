@@ -14,8 +14,6 @@ const AddChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  leoProfanity.loadDictionary('ru');
-
   const { isShow } = useSelector((state) => state.modal);
   const { token } = useSelector((state) => state.auth.user);
 
