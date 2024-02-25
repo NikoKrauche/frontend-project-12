@@ -33,23 +33,21 @@ const EditChannel = ({ id }) => {
       .notOneOf(channelNames, t('Modal.error.nameDuplicate')),
   });
 
-  const handleSubmit = async ({ name }) => {
-    const filteredName = leoProfanity.clean(name);
-    try {
-      await dispatch(renameChannelThunk({ token, name: filteredName, id }));
-      dispatch(modalClose());
-      toast.success(t('Modal.toastEdit'));
-    } catch (error) {
-      formik.setStatus({ error: true });
-    }
-  };
-
   const formik = useFormik({
     initialValues: {
       name: currentChannel.name,
     },
     validationSchema,
-    onSubmit: handleSubmit,
+    onSubmit: async ({ name }) => {
+      const filteredName = leoProfanity.clean(name);
+      try {
+        await dispatch(renameChannelThunk({ token, name: filteredName, id }));
+        dispatch(modalClose());
+        toast.success(t('Modal.toastEdit'));
+      } catch (error) {
+        formik.setStatus({ error: true });
+      }
+    }
   });
 
   useEffect(() => {

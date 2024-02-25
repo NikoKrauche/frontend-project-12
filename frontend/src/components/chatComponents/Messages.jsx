@@ -25,32 +25,30 @@ const Messages = ({ currentChannel, userData }) => {
       .string()
       .required(),
   });
-
-  const handleSubmit = async (values, { resetForm }) => {
-    const filteredMessage = leoProfanity.clean(values.body);
-    try {
-      const newMessage = {
-        body: filteredMessage,
-        channelId: currentChannel,
-        username: userData.username,
-      };
-
-      await dispatch(sendMessage({ token: userData.token, newMessage }));
-      resetForm();
-    } catch (e) {
-      if (e.message === 'Network Error') {
-        toast.error(t('Chat.error.network'));
-      }
-      formik.setStatus({ error: true });
-    }
-  };
-
+  
   const formik = useFormik({
     initialValues: {
       body: '',
     },
     validationSchema,
-    onSubmit: handleSubmit,
+    onSubmit: async (values, { resetForm }) => {
+      const filteredMessage = leoProfanity.clean(values.body);
+      try {
+        const newMessage = {
+          body: filteredMessage,
+          channelId: currentChannel,
+          username: userData.username,
+        };
+  
+        await dispatch(sendMessage({ token: userData.token, newMessage }));
+        resetForm();
+      } catch (e) {
+        if (e.message === 'Network Error') {
+          toast.error(t('Chat.error.network'));
+        }
+        formik.setStatus({ error: true });
+      }
+    }
   });
 
   return (

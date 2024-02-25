@@ -30,25 +30,6 @@ const SignupPage = () => {
       .oneOf([Yup.ref('password')], t('SignupPage.error.passwordMatch')),
   });
 
-  const handleSubmit = async ({ username, password }) => {
-    try {
-      const { data } = await axios.post(routes.createNewUser(), { username, password });
-
-      dispatch(loginSuccess(data));
-      localStorage.setItem('userData', JSON.stringify(data));
-      navigate(routes.mainPath());
-    } catch (e) {
-      if (e.message === 'Network Error') {
-        toast.error(t('Chat.error.network'));
-      }
-      if (e.response && e.response.status === 409) {
-        formik.setStatus({ serverError: true });
-      } else {
-        formik.setStatus({ error: true });
-      }
-    }
-  };
-
   const formik = useFormik({
     initialValues: {
       username: null,
@@ -56,7 +37,24 @@ const SignupPage = () => {
       passwordConfirmation: '',
     },
     validationSchema,
-    onSubmit: handleSubmit,
+    onSubmit: async ({ username, password }) => {
+      try {
+        const { data } = await axios.post(routes.createNewUser(), { username, password });
+  
+        dispatch(loginSuccess(data));
+        localStorage.setItem('userData', JSON.stringify(data));
+        navigate(routes.mainPath());
+      } catch (e) {
+        if (e.message === 'Network Error') {
+          toast.error(t('Chat.error.network'));
+        }
+        if (e.response && e.response.status === 409) {
+          formik.setStatus({ serverError: true });
+        } else {
+          formik.setStatus({ error: true });
+        }
+      }
+    }
   });
 
   return (

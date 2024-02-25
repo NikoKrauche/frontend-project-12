@@ -28,23 +28,21 @@ const AddChannel = () => {
       .notOneOf(channelNames, t('Modal.error.nameDuplicate')),
   });
 
-  const handleSubmit = async ({ name }) => {
-    const filteredName = leoProfanity.clean(name);
-    try {
-      await dispatch(addChannelThunk({ token, name: filteredName }));
-      dispatch(modalClose());
-      toast.success(t('Modal.toastAdd'));
-    } catch (error) {
-      formik.setStatus({ error: true });
-    }
-  };
-
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema,
-    onSubmit: handleSubmit,
+    onSubmit: async ({ name }) => {
+      const filteredName = leoProfanity.clean(name);
+      try {
+        await dispatch(addChannelThunk({ token, name: filteredName }));
+        dispatch(modalClose());
+        toast.success(t('Modal.toastAdd'));
+      } catch (error) {
+        formik.setStatus({ error: true });
+      }
+    }
   });
 
   return (
