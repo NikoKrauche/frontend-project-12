@@ -104,7 +104,7 @@ const SignupPage = () => {
                       required
                       autoComplete="new-password"
                     />
-                    <Form.Label  htmlFor="password">{t('SignupPage.password')}</Form.Label>
+                    <Form.Label htmlFor="password">{t('SignupPage.password')}</Form.Label>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.password}
                     </Form.Control.Feedback>

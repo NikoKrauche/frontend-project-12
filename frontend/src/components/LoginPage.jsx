@@ -71,7 +71,7 @@ const LoginPage = () => {
                       autoComplete="nickname"
                       autoFocus
                     />
-                    <Form.Label>{t('LoginPage.username')}</Form.Label>
+                    <Form.Label htmlFor="username">{t('LoginPage.username')}</Form.Label>
                   </Form.Group>
                   <Form.Group className="form-floating mb-3">
                     <Form.Control
@@ -85,7 +85,7 @@ const LoginPage = () => {
                       isInvalid={error}
                       autoComplete="current-password"
                     />
-                    <Form.Label>{t('LoginPage.password')}</Form.Label>
+                    <Form.Label htmlFor="password">{t('LoginPage.password')}</Form.Label>
                     {error && (
                       <Form.Control.Feedback type="invalid" className="invalid-tooltip">
                         {t('LoginPage.error')}
