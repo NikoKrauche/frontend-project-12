@@ -10,7 +10,8 @@ import { toast } from 'react-toastify';
 import NavigationBar from './Navigation.jsx';
 import routes from '../utilities/routes.js';
 import {
-  loginSuccess, loginFailure,
+  loginSuccess,
+  loginFailure,
 } from '../slices/authorizationSlice.js';
 
 const LoginPage = () => {
@@ -86,7 +87,11 @@ const LoginPage = () => {
                       autoComplete="current-password"
                     />
                     <Form.Label>{t('LoginPage.password')}</Form.Label>
-                    {error && <Form.Control.Feedback type="invalid" className="invalid-feedback">{t('LoginPage.error')}</Form.Control.Feedback> }
+                    {error && (
+                      <Form.Control.Feedback type="invalid" className="invalid-tooltip">
+                        {t('LoginPage.error')}
+                      </Form.Control.Feedback>
+                    )}
                   </Form.Group>
                   <Button
                     className="w-100"
