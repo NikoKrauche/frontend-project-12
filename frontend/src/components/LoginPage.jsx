@@ -22,7 +22,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const { data } = await axios.post(routes.authorization(), values);
+      const { data } = await axios.post(routes.authorization(), values, { timeout: 3000 });
       dispatch(loginSuccess(data));
       localStorage.setItem('userData', JSON.stringify(data));
       navigate(routes.mainPath());
