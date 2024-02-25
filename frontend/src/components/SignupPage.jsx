@@ -86,7 +86,7 @@ const SignupPage = () => {
                       autoComplete="nickname"
                       autoFocus
                     />
-                    <Form.Label>{t('SignupPage.username')}</Form.Label>
+                    <Form.Label  htmlFor="username">{t('SignupPage.username')}</Form.Label>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.username}
                     </Form.Control.Feedback>
@@ -104,7 +104,7 @@ const SignupPage = () => {
                       required
                       autoComplete="new-password"
                     />
-                    <Form.Label>{t('SignupPage.password')}</Form.Label>
+                    <Form.Label  htmlFor="password">{t('SignupPage.password')}</Form.Label>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.password}
                     </Form.Control.Feedback>
@@ -123,7 +123,7 @@ const SignupPage = () => {
                       required
                       autoComplete="new-password"
                     />
-                    <Form.Label>{t('SignupPage.passwordConfirmation')}</Form.Label>
+                    <Form.Label htmlFor="passwordConfirmation">{t('SignupPage.passwordConfirmation')}</Form.Label>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.passwordConfirmation}
                     </Form.Control.Feedback>
