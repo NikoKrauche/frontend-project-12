@@ -5,8 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import rollbarConfig from './utilities/rollbarConfig.js';
 
+import rollbarConfig from './utilities/rollbarConfig.js';
 import App from './components/App.jsx';
 import store from './slices/index.js';
 import resources from './locales/index.js';
