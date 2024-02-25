@@ -76,16 +76,14 @@ const EditChannel = ({ id }) => {
           <Form.Group>
             <Form.Control
               className="mb-2"
-              id="modal-edit"
+              id="name"
               name="name"
               ref={input}
               onChange={formik.handleChange}
               value={formik.values.name}
               isInvalid={formik.touched.name && !!formik.errors.name}
             />
-            <Form.Label htmlFor="name" className="visually-hidden">
-              {t('Modal.name')}
-            </Form.Label>
+            <Form.Label htmlFor="name">{t('Modal.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
