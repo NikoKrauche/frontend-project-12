@@ -11,9 +11,7 @@ export default {
       password: 'Пароль',
       register: 'Регистрация',
       cardFooter: 'Нет аккаунта? ',
-      error: {
-        valid: 'Неверные имя пользователя или пароль',
-      },
+      error: 'Неверные имя пользователя или пароль',
     },
     SignupPage: {
       registration: 'Регистрация',

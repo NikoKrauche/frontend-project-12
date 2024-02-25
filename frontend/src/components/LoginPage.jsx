@@ -22,7 +22,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const { data } = await axios.post(routes.authorization(), values, { timeout: 3000 });
+      const { data } = await axios.post(routes.authorization(), values, { timeout: 4000 });
       dispatch(loginSuccess(data));
       localStorage.setItem('userData', JSON.stringify(data));
       navigate(routes.mainPath());
@@ -86,7 +86,7 @@ const LoginPage = () => {
                       autoComplete="current-password"
                     />
                     <Form.Label>{t('LoginPage.password')}</Form.Label>
-                    {error && <Form.Control.Feedback type="invalid" className="invalid-feedback">{t('LoginPage.error.valid')}</Form.Control.Feedback> }
+                    {error && <Form.Control.Feedback type="invalid" className="invalid-feedback">{t('LoginPage.error')}</Form.Control.Feedback> }
                   </Form.Group>
                   <Button
                     className="w-100"
