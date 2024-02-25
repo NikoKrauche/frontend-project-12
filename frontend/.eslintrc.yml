@@ -1,5 +1,3 @@
-parser: "@babel/eslint-parser"
-
 env:
   browser: true
   es2021: true
@@ -17,8 +15,9 @@ parserOptions:
   sourceType: module
 
 plugins:
+  - react
   - functional
-
+  
 rules:
   import/extensions: 0
   import/no-unresolved: 0
