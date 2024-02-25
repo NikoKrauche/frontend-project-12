@@ -86,7 +86,7 @@ const SignupPage = () => {
                       autoComplete="nickname"
                       autoFocus
                     />
-                    <Form.Label  htmlFor="username">{t('SignupPage.username')}</Form.Label>
+                    <Form.Label htmlFor="username">{t('SignupPage.username')}</Form.Label>
                     <Form.Control.Feedback type="invalid">
                       {formik.errors.username}
                     </Form.Control.Feedback>
