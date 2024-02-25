@@ -83,7 +83,6 @@ const LoginPage = () => {
                       onChange={formik.handleChange}
                       disabled={formik.isSubmitting}
                       isInvalid={error}
-                      required
                       autoComplete="current-password"
                     />
                     <Form.Label>{t('LoginPage.password')}</Form.Label>
