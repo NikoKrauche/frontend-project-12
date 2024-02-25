@@ -60,6 +60,7 @@ const Messages = ({ currentChannel, userData }) => {
           <p className="m-0">
             <b>
               #
+              {' '}
               {activeChannel.name}
             </b>
           </p>
