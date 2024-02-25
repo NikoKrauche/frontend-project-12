@@ -26,7 +26,7 @@ export default {
         nameLength: 'От 3 до 20 символов',
         passwordLength: 'Не менее 6 символов',
         passwordMatch: 'Пароли должны совпадать',
-        usernameExists: 'Имя пользователя уже существует',
+        usernameExists: 'Такой пользователь уже существует',
       },
     },
     Page404: {
