@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
@@ -14,6 +14,7 @@ const EditChannel = ({ id }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const input = useRef(null);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   const { isShow } = useSelector((state) => state.modal);
   const { token } = useSelector((state) => state.auth.user);
@@ -52,9 +53,12 @@ const EditChannel = ({ id }) => {
   });
 
   useEffect(() => {
-    input.current.focus();
-    input.current.setSelectionRange(0, formik.values.name.length);
-  });
+    if (isInitialRender) {
+      input.current.focus();
+      input.current.setSelectionRange(0, formik.values.name.length);
+      setIsInitialRender(false);
+    }
+  }, [isInitialRender, formik.values.name]);
 
   return (
     <Modal
