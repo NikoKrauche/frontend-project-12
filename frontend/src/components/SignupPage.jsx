@@ -40,7 +40,7 @@ const SignupPage = () => {
     onSubmit: async ({ username, password }) => {
       try {
         const { data } = await axios.post(routes.createNewUser(), { username, password });
-  
+
         dispatch(loginSuccess(data));
         localStorage.setItem('userData', JSON.stringify(data));
         navigate(routes.mainPath());
@@ -54,7 +54,7 @@ const SignupPage = () => {
           formik.setStatus({ error: true });
         }
       }
-    }
+    },
   });
 
   return (

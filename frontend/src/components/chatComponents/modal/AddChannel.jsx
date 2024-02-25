@@ -42,7 +42,7 @@ const AddChannel = () => {
       } catch (error) {
         formik.setStatus({ error: true });
       }
-    }
+    },
   });
 
   return (

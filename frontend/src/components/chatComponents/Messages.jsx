@@ -25,7 +25,7 @@ const Messages = ({ currentChannel, userData }) => {
       .string()
       .required(),
   });
-  
+
   const formik = useFormik({
     initialValues: {
       body: '',
@@ -39,7 +39,7 @@ const Messages = ({ currentChannel, userData }) => {
           channelId: currentChannel,
           username: userData.username,
         };
-  
+
         await dispatch(sendMessage({ token: userData.token, newMessage }));
         resetForm();
       } catch (e) {
@@ -48,7 +48,7 @@ const Messages = ({ currentChannel, userData }) => {
         }
         formik.setStatus({ error: true });
       }
-    }
+    },
   });
 
   return (

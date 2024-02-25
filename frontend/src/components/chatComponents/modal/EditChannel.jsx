@@ -47,7 +47,7 @@ const EditChannel = ({ id }) => {
       } catch (error) {
         formik.setStatus({ error: true });
       }
-    }
+    },
   });
 
   useEffect(() => {
