@@ -24,8 +24,6 @@ const init = async () => {
       },
     });
 
-  leoProfanity.loadDictionary('ru');
-
   return (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
