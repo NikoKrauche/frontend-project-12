@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 
+import sockets from './utilities/webSocketClient.js';
 import rollbarConfig from './utilities/rollbarConfig.js';
 import App from './components/App.jsx';
 import store from './slices/index.js';
@@ -25,6 +26,8 @@ const init = async () => {
     });
 
   await leoProfanity.loadDictionary('en');
+
+  sockets(store.dispatch);
 
   return (
     <RollbarProvider config={rollbarConfig}>

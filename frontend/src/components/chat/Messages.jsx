@@ -7,16 +7,18 @@ import { useTranslation } from 'react-i18next';
 import { Col, Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
+import { InputMessageSvg } from './SvgElements';
 import { addMessage, getMessages } from '../../services/chatApi.js';
 
 const Messages = ({ currentChannel }) => {
   const { t } = useTranslation();
   const [add] = addMessage();
-  const { data: state, isLoading } = getMessages();
 
-  const { username } = useSelector((state) => state.auth.user);
+  const { data: dataMessages, isLoading } = getMessages();
+  const userData = useSelector((state) => state.auth.user);
   const activeChannel = useSelector((state) => state.channels.entities[currentChannel]) || { name: 'general' };
-  const messages = state && state.filter((message) => message.channelId === currentChannel);
+  const messages = dataMessages && dataMessages
+    .filter((message) => message.channelId === currentChannel);
 
   const validationSchema = yup.object().shape({
     body: yup
@@ -35,7 +37,7 @@ const Messages = ({ currentChannel }) => {
         const newMessage = {
           body: filteredMessage,
           channelId: currentChannel,
-          username,
+          username: userData.username,
         };
         await add(newMessage);
         resetForm();
@@ -97,9 +99,7 @@ const Messages = ({ currentChannel }) => {
                 variant="outline-light"
                 disabled={formik.isSubmitting}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="20" height="20" fill="currentColor">
-                  <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
-                </svg>
+                <InputMessageSvg />
                 <span className="visually-hidden">{t('Chat.buttonSubmit')}</span>
               </Button>
             </Form.Group>

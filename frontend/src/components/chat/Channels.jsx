@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Col, Button, Row, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
@@ -15,12 +15,11 @@ const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentChannel = useSelector((state) => state.channels.currentChannel);
-  const { data: channels, isLoading } = getChannels();
+  const { data: channels } = getChannels();
 
   const handleClick = (id) => {
     dispatch(setChannel(id));
   };
-
 
   return (
     <Row className="h-100 bg-white flex-md-row">
@@ -64,12 +63,12 @@ const Channels = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item
-                      onClick={() => dispatch(modalOpen({ modal: 'remove', id }))}
+                      onClick={() => dispatch(modalOpen({ type: 'remove', id }))}
                     >
                       {t('Channels.delete')}
                     </Dropdown.Item>
                     <Dropdown.Item
-                      onClick={() => dispatch(modalOpen({ modal: 'edit', id }))}
+                      onClick={() => dispatch(modalOpen({ type: 'edit', id }))}
                     >
                       {t('Channels.rename')}
                     </Dropdown.Item>

@@ -5,7 +5,7 @@ import EditChannel from './EditChannel.jsx';
 import RemoveChannel from './RemoveChannel.jsx';
 
 const Modal = () => {
-  const { isShow, modal, id } = useSelector((state) => state.modal);
+  const { isShow, modalType, id } = useSelector((state) => state.modal);
   if (!isShow) return null;
 
   const activeModal = {
@@ -15,7 +15,7 @@ const Modal = () => {
   };
 
   return (
-    activeModal[modal]
+    activeModal[modalType]
   );
 };
 

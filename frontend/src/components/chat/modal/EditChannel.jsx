@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import leoProfanity from 'leo-profanity';
@@ -8,16 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { modalClose } from '../../../slices/modalSlice.js';
-import { setChannel } from '../../../slices/channelsSlice.js';
-import { addChannel, getChannels } from '../../../services/chatApi.js';
+import { renameChannel, getChannels } from '../../../services/chatApi.js';
 
-const AddChannel = () => {
+const EditChannel = ({ id }) => {
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [add] = addChannel();
+  const input = useRef(null);
+  const [rename] = renameChannel();
 
-  const { data: channels } =  getChannels();
+  const { data: channels } = getChannels();
   const { isShow } = useSelector((state) => state.modal);
+  const currentChannel = channels.find((channel) => channel.id === id);
   const channelNames = channels.map((channel) => channel.name);
 
   const validationSchema = Yup.object().shape({
@@ -30,22 +32,29 @@ const AddChannel = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: currentChannel.name,
     },
     validationSchema,
     onSubmit: async ({ name }) => {
       const filteredName = leoProfanity.clean(name);
-      const newChannel = { name: filteredName };
+      const editedChannel = { name: filteredName };
       try {
-        const { data } = await add(newChannel);
+        await rename({ editedChannel, id });
         dispatch(modalClose());
-        dispatch(setChannel(data.id));
-        toast.success(t('Modal.toastAdd'));
+        toast.success(t('Modal.toastEdit'));
       } catch (error) {
         formik.setStatus({ error: true });
       }
     },
   });
+
+  useEffect(() => {
+    if (isInitialRender) {
+      input.current.focus();
+      input.current.setSelectionRange(0, formik.values.name.length);
+      setIsInitialRender(false);
+    }
+  }, [isInitialRender, formik.values.name]);
 
   return (
     <Modal
@@ -56,7 +65,7 @@ const AddChannel = () => {
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>{t('Modal.add')}</Modal.Title>
+        <Modal.Title>{t('Modal.edit')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -65,16 +74,12 @@ const AddChannel = () => {
               className="mb-2"
               id="name"
               name="name"
-              autoFocus
-              required
+              ref={input}
               onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
               value={formik.values.name}
               isInvalid={formik.touched.name && !!formik.errors.name}
             />
-            <Form.Label htmlFor="name" className="visually-hidden">
-              {t('Modal.name')}
-            </Form.Label>
+            <Form.Label className="visually-hidden" htmlFor="name">{t('Modal.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
@@ -97,4 +102,4 @@ const AddChannel = () => {
   );
 };
 
-export default AddChannel;
+export default EditChannel;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import NavigationBar from './Navigation.jsx';
-import Channels from './chatComponents/Channels.jsx';
-import Modal from './chatComponents/modal/Modal.jsx';
+import Channels from './chat/Channels.jsx';
+import Modal from './chat/modal/Modal.jsx';
 
 const MainPage = () => (
   <div className="d-flex flex-column vh-100">

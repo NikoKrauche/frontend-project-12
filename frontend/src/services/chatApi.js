@@ -3,24 +3,24 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: fetchBaseQuery({
-     baseUrl: '/api/v1',
-     prepareHeaders: (headers, { getState }) => {
+    baseUrl: '/api/v1',
+    prepareHeaders: (headers, { getState }) => {
       const { token } = getState().auth.user;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`);
       }
-  
-      return headers
+
+      return headers;
     },
   }),
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: () =>  `messages`,
+      query: () => 'messages',
       providesTags: ['Messages'],
     }),
     addMessage: builder.mutation({
       query: (newMessage) => ({
-        url: `messages`,
+        url: 'messages',
         method: 'POST',
         body: newMessage,
         providesTags: ['Messages'],
@@ -34,12 +34,12 @@ export const chatApi = createApi({
       }),
     }),
     getChannels: builder.query({
-      query: () =>  `channels`,
+      query: () => 'channels',
       providesTags: ['Channels'],
     }),
     addChannel: builder.mutation({
       query: (newChannel) => ({
-        url: `channels`,
+        url: 'channels',
         method: 'POST',
         body: newChannel,
         providesTags: ['Channels'],
@@ -73,7 +73,7 @@ const {
   useRemoveChannelMutation,
 } = chatApi;
 
-export  {
+export {
   useGetMessagesQuery as getMessages,
   useAddMessageMutation as addMessage,
   useRemoveMessageMutation as removeMessage,

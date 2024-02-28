@@ -21,13 +21,13 @@ const RemoveChannel = ({ id }) => {
 
   const currentChannel = useSelector((state) => state.channels.currentChannel);
   const { isShow } = useSelector((state) => state.modal);
-  
+
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true);
       await remove(id);
       if (Number(currentChannel) === Number(id)) dispatch(setChannel('1'));
-      dispatch(modalClose()); 
+      dispatch(modalClose());
       messagesId.map((message) => removeM(message.id));
       toast.success(t('Modal.toastDelete'));
     } catch (e) {
