@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Col, Button, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
-import { InputMessageSvg } from './SvgElements';
+import { InputMessageSvg } from './SvgElements.jsx';
 import { addMessage, getMessages } from '../../services/chatApi.js';
 
 const Messages = ({ currentChannel }) => {

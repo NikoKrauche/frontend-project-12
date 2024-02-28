@@ -1,8 +1,8 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { loginSuccess } from '../slices/authorizationSlice.js';
 

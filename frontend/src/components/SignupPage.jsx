@@ -1,15 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import { useTranslation } from 'react-i18next';
-import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-import NavigationBar from './Navigation.jsx';
 import routes from '../utilities/routes.js';
+import NavigationBar from './Navigation.jsx';
 import { loginSuccess } from '../slices/authorizationSlice.js';
 
 const SignupPage = () => {

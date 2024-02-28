@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { logout } from '../slices/authorizationSlice.js';
-
 import routes from '../utilities/routes.js';
 
 const NavigationBar = () => {
