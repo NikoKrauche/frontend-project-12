@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import { modalClose } from '../../../slices/modalSlice.js';
+import { setChannel } from '../../../slices/channelsSlice.js';
 import { addChannel, getChannels } from '../../../services/chatApi.js';
 
 const AddChannel = () => {
@@ -36,8 +37,9 @@ const AddChannel = () => {
       const filteredName = leoProfanity.clean(name);
       const newChannel = { name: filteredName };
       try {
-        await add(newChannel);
+        const { data } = await add(newChannel);
         dispatch(modalClose());
+        dispatch(setChannel(data.id));
         toast.success(t('Modal.toastAdd'));
       } catch (error) {
         formik.setStatus({ error: true });
