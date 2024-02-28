@@ -25,7 +25,7 @@ real-time React/Redux application using
 
 ## [Link to app](https://go-chat-90zg.onrender.com/)
 
-<center>[![Web App](https://i.postimg.cc/G2DBgNpC/hexlet-Chat.png)](https://go-chat-90zg.onrender.com/)
+[![Web App](https://i.postimg.cc/G2DBgNpC/hexlet-Chat.png)](https://go-chat-90zg.onrender.com/)
 
 ***
  [![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/assets/master/images/hexlet_logo128.png)](https://ru.hexlet.io/u/nikokrauch)
