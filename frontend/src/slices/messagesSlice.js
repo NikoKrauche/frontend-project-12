@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { removeChannelThunk } from './channelsSlice.js';
 import routes from '../utilities/routes.js';
 
 const header = (token) => ({
@@ -33,17 +32,16 @@ const messagesSlice = createSlice({
   reducers: {
     addMessage: messagesAdapter.addOne,
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchMessages.fulfilled, messagesAdapter.addMany)
-      .addCase(removeChannelThunk.fulfilled, (state, { payload }) => {
-        const channelId = payload.id;
-        const messageIdsToRemove = Object.values(state.entities)
-          .filter((message) => message.channelId === channelId)
-          .map((message) => message.id);
-        messagesAdapter.removeMany(state, messageIdsToRemove);
-      });
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addCase(removeChannelThunk.fulfilled, (state, { payload }) => {
+  //       const channelId = payload.id;
+  //       const messageIdsToRemove = Object.values(state.entities)
+  //         .filter((message) => message.channelId === channelId)
+  //         .map((message) => message.id);
+  //       messagesAdapter.removeMany(state, messageIdsToRemove);
+  //     });
+  // },
 });
 
 export const { addMessage } = messagesSlice.actions;

@@ -1,19 +1,22 @@
 import { io } from 'socket.io-client';
 import { addMessage } from '../slices/messagesSlice.js';
 import { addChannel, renameChannel, removeChannel } from '../slices/channelsSlice.js';
+import { chatApi } from '../services/chatApi.js';
+
 
 export default (dispatch) => {
+
   const socket = io();
-  socket.on('newMessage', (message) => {
-    dispatch(addMessage(message));
+  socket.on('newMessage', () => {
+    dispatch(chatApi.util.invalidateTags(['Messages']))
   });
-  socket.on('newChannel', (channel) => {
-    dispatch(addChannel(channel));
+  socket.on('newChannel', () => {
+    dispatch(chatApi.util.invalidateTags(['Channels']))
   });
-  socket.on('removeChannel', (channel) => {
-    dispatch(removeChannel(channel));
+  socket.on('removeChannel', () => {
+    dispatch(chatApi.util.invalidateTags(['Channels']))
   });
-  socket.on('renameChannel', (channel) => {
-    dispatch(renameChannel({ id: channel.id, changes: channel }));
+  socket.on('renameChannel', () => {
+    dispatch(chatApi.util.invalidateTags(['Channels']))
   });
 };

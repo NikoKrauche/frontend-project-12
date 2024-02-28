@@ -17,11 +17,11 @@ const App = () => {
 
   useEffect(() => sockets(dispatch));
 
-  const token = JSON.parse(localStorage.getItem('userData'));
-  if (token) dispatch(loginSuccess(token));
+  const data = useSelector((state) => state.auth.user);
+  if (data) dispatch(loginSuccess(data));
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
+ 
   return (
     <BrowserRouter>
       <Routes>

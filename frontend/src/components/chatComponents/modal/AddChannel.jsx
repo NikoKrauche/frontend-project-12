@@ -7,18 +7,17 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { addChannelThunk, selectors } from '../../../slices/channelsSlice.js';
 import { modalClose } from '../../../slices/modalSlice.js';
+import { addChannel, getChannels } from '../../../services/chatApi.js';
 
 const AddChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [add] = addChannel();
 
+  const { data: channels } =  getChannels();
   const { isShow } = useSelector((state) => state.modal);
-  const { token } = useSelector((state) => state.auth.user);
-
-  const channelNames = useSelector((state) => selectors.selectAll(state)
-    .map((channel) => channel.name));
+  const channelNames = channels.map((channel) => channel.name);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -35,8 +34,9 @@ const AddChannel = () => {
     validationSchema,
     onSubmit: async ({ name }) => {
       const filteredName = leoProfanity.clean(name);
+      const newChannel = { name: filteredName };
       try {
-        await dispatch(addChannelThunk({ token, name: filteredName }));
+        await add(newChannel);
         dispatch(modalClose());
         toast.success(t('Modal.toastAdd'));
       } catch (error) {

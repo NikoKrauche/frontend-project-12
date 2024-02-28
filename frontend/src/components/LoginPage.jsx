@@ -9,10 +9,7 @@ import { toast } from 'react-toastify';
 
 import NavigationBar from './Navigation.jsx';
 import routes from '../utilities/routes.js';
-import {
-  loginSuccess,
-  loginFailure,
-} from '../slices/authorizationSlice.js';
+import { loginSuccess, loginFailure } from '../slices/authorizationSlice.js';
 
 const LoginPage = () => {
   const { t } = useTranslation();
@@ -25,7 +22,6 @@ const LoginPage = () => {
     try {
       const { data } = await axios.post(routes.authorization(), values, { timeout: 4000 });
       dispatch(loginSuccess(data));
-      localStorage.setItem('userData', JSON.stringify(data));
       navigate(routes.mainPath());
     } catch (e) {
       if (e.message === 'Network Error') {

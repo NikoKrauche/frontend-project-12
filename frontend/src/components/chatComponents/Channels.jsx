@@ -7,21 +7,20 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Messages from './Messages.jsx';
 import AddChannels from './AddChannels.jsx';
-import { fetchChannels, setChannel, selectors } from '../../slices/channelsSlice.js';
+import { setChannel } from '../../slices/channelsSlice.js';
+import { getChannels } from '../../services/chatApi.js';
 import { modalOpen } from '../../slices/modalSlice.js';
 
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const userData = useSelector((state) => state.auth.user);
-
-  useEffect(() => { dispatch(fetchChannels(userData.token)); });
   const currentChannel = useSelector((state) => state.channels.currentChannel);
-  const channels = useSelector(selectors.selectAll);
+  const { data: channels, isLoading } = getChannels();
 
   const handleClick = (id) => {
     dispatch(setChannel(id));
   };
+
 
   return (
     <Row className="h-100 bg-white flex-md-row">
@@ -82,7 +81,7 @@ const Channels = () => {
         </ul>
         )}
       </Col>
-      <Messages currentChannel={currentChannel} userData={userData} />
+      <Messages currentChannel={currentChannel} />
     </Row>
   );
 };

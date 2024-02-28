@@ -1,24 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { Col, Button, Form } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { fetchMessages, sendMessage, selectors } from '../../slices/messagesSlice';
+import { addMessage, getMessages } from '../../services/chatApi.js';
 
-const Messages = ({ currentChannel, userData }) => {
-  const dispatch = useDispatch();
+const Messages = ({ currentChannel }) => {
   const { t } = useTranslation();
+  const [add] = addMessage();
+  const { data: state, isLoading } = getMessages();
 
-  useEffect(() => { dispatch(fetchMessages(userData.token)); });
-
+  const { username } = useSelector((state) => state.auth.user);
   const activeChannel = useSelector((state) => state.channels.entities[currentChannel]) || { name: 'general' };
-
-  const messages = useSelector(selectors.selectAll)
-    .filter((message) => message.channelId === currentChannel);
+  const messages = state && state.filter((message) => message.channelId === currentChannel);
 
   const validationSchema = yup.object().shape({
     body: yup
@@ -37,10 +35,9 @@ const Messages = ({ currentChannel, userData }) => {
         const newMessage = {
           body: filteredMessage,
           channelId: currentChannel,
-          username: userData.username,
+          username,
         };
-
-        await dispatch(sendMessage({ token: userData.token, newMessage }));
+        await add(newMessage);
         resetForm();
       } catch (e) {
         if (e.message === 'Network Error') {
@@ -63,11 +60,11 @@ const Messages = ({ currentChannel, userData }) => {
             </b>
           </p>
           <span className="text-muted">
-            {t('Chat.messageCounter', { count: messages.length })}
+            {t('Chat.messageCounter', { count: messages?.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
-          {messages.map(({ id, body, username }) => (
+          {!isLoading && messages.map(({ id, body, username }) => (
             <div key={id} className="text-break mb-2">
               <b>
                 {username}

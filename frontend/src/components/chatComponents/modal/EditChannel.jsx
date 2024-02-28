@@ -7,23 +7,20 @@ import { Modal, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { renameChannelThunk, selectors } from '../../../slices/channelsSlice.js';
 import { modalClose } from '../../../slices/modalSlice.js';
+import { renameChannel, getChannels } from '../../../services/chatApi.js';
 
 const EditChannel = ({ id }) => {
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const input = useRef(null);
-  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [rename] = renameChannel();
 
+  const { data: channels } =  getChannels();
   const { isShow } = useSelector((state) => state.modal);
-  const { token } = useSelector((state) => state.auth.user);
-
-  const currentChannel = useSelector((state) => selectors.selectAll(state)
-    .find((channel) => channel.id === id));
-
-  const channelNames = useSelector((state) => selectors.selectAll(state)
-    .map((channel) => channel.name));
+  const currentChannel = channels.find((channel) => channel.id === id);
+  const channelNames = channels.map((channel) => channel.name);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -40,8 +37,9 @@ const EditChannel = ({ id }) => {
     validationSchema,
     onSubmit: async ({ name }) => {
       const filteredName = leoProfanity.clean(name);
+      const editedChannel = { name: filteredName };
       try {
-        await dispatch(renameChannelThunk({ token, name: filteredName, id }));
+        await rename({ editedChannel, id });
         dispatch(modalClose());
         toast.success(t('Modal.toastEdit'));
       } catch (error) {
@@ -81,7 +79,7 @@ const EditChannel = ({ id }) => {
               value={formik.values.name}
               isInvalid={formik.touched.name && !!formik.errors.name}
             />
-            <Form.Label htmlFor="name">{t('Modal.name')}</Form.Label>
+            <Form.Label className="visually-hidden" htmlFor="name">{t('Modal.name')}</Form.Label>
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>

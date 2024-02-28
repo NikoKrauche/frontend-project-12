@@ -5,11 +5,12 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: {
     isAuthenticated: false,
-    user: null,
+    user: JSON.parse(localStorage.getItem('userData')),
     error: null,
   },
   reducers: {
     loginSuccess: (state, action) => {
+      localStorage.setItem('userData', JSON.stringify(action.payload));
       state.isAuthenticated = true;
       state.user = action.payload;
     },
@@ -22,7 +23,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.error = null;
-      localStorage.removeItem('token');
+      localStorage.removeItem('userData');
     },
   },
 });
